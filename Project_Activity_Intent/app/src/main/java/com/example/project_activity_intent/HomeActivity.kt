@@ -5,10 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,16 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -48,7 +49,6 @@ class HomeActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ){
-                    val username = getIntent().getStringExtra("username") ?: ""
                 MainScreen()
                 }
             }
@@ -62,17 +62,16 @@ fun TopBar(){
     val context = LocalContext.current
 
     TopAppBar(
-        title = {Text(text = "Good evening", fontSize = 30.sp,
+        title = {Text(
+            textAlign = TextAlign.Left,
+            text = "Selamat Pagi",
+            fontSize = 23.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            color = Color.White,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold
         )},
-
-        navigationIcon = {
-            IconButton(onClick = {
-                Toast.makeText(context, "Menu", Toast.LENGTH_SHORT).show()
-            }) {
-//                Icon(Icons.Default.Menu, "Menu")
-            }},
         actions = {
             IconButton(onClick = {
                 Toast.makeText(context, "Setting", Toast.LENGTH_SHORT).show()
@@ -80,9 +79,13 @@ fun TopBar(){
                 Icon(Icons.Default.Settings, "Setting")
             }
         },
-        backgroundColor = androidx.compose.ui.graphics.Color.Black,
-        contentColor = androidx.compose.ui.graphics.Color.White,
+        backgroundColor = Color.Transparent,
+        contentColor = Color.White,
     )
+}
+
+fun Text(textAlign: TextAlign, text: String, fontSize: Dp, maxLines: Int, overflow: TextOverflow) {
+
 }
 //@Preview(showBackground = true)
 //@Composable
@@ -95,79 +98,115 @@ fun TopBar(){
 @Composable
 fun MainScreen() {
     Scaffold(
+        modifier = Modifier.shadow(70.dp),
         topBar = { TopBar() },
         bottomBar = { BottomNavigationBar() },
 
         content = { padding -> // We have to pass the scaffold inner padding to our content. That's why we use Box.
-            Box(modifier = Modifier.padding(padding)) {
+            Box(modifier = Modifier
+                .padding(padding)
+                .shadow(0.dp)) {
                 /* Add code later */
+                Box(modifier = Modifier.shadow(0.dp))
             }
         },
-        backgroundColor = Color.Black // Set background color to avoid the white flashing when you switch between screens
+        backgroundColor = Color.Transparent // Set background color to avoid the white flashing when you switch between
+
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
+    BackgroundImage()
     MainScreen()
     MostPlayedSection()
+    RecommendSection()
+
 }
 
-//Card Atas 2
+
+//Card Besar 2
 @Composable
 fun MostPlayedSection() {
-        Row(
-            modifier = Modifier.padding(
-                top = 100.dp, start = 35.dp, end = 8.dp
-            ),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Image(
-                modifier = Modifier
-                    .padding(top = 2.dp, start = 8.dp, end = 8.dp)
-                    .width(150.dp)
-                    .height(60.dp),
-                painter = painterResource(
-                    id = R.drawable.pagi
-                ),
-                contentDescription = null,
-            )
-            Image(
-                modifier = Modifier
-                    .padding(top = 2.dp, start = 8.dp, end = 8.dp)
-                    .width(150.dp)
-                    .height(60.dp),
-                painter = painterResource(
-                    id = R.drawable.pagi
-                ),
-                contentDescription = null,
-            )
-
-        }
     Row(
         modifier = Modifier.padding(
-            top = 150.dp, start = 35.dp, end = 8.dp
+            top = 60.dp, start = 8.dp, end = 8.dp
         ),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.Start,
     ) {
         Image(
             modifier = Modifier
                 .padding(top = 2.dp, start = 8.dp, end = 8.dp)
-                .width(150.dp)
+                .width(170.dp)
                 .height(60.dp),
             painter = painterResource(
-                id = R.drawable.pagi
+                id = R.drawable.liked
             ),
             contentDescription = null,
         )
         Image(
             modifier = Modifier
                 .padding(top = 2.dp, start = 8.dp, end = 8.dp)
-                .width(150.dp)
+                .width(170.dp)
+                .height(60.dp),
+            painter = painterResource(
+                id = R.drawable.post
+            ),
+            contentDescription = null,
+        )
+
+    }
+    Row(
+        modifier = Modifier.padding(
+            top = 115.dp, start = 8.dp, end = 8.dp
+        ),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        Image(
+            modifier = Modifier
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(170.dp)
+                .height(60.dp),
+            painter = painterResource(
+                id = R.drawable.fiji
+            ),
+            contentDescription = null,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(170.dp)
                 .height(60.dp),
             painter = painterResource(
                 id = R.drawable.pagi
+            ),
+            contentDescription = null,
+        )
+    }
+    Row(
+        modifier = Modifier.padding(
+            top = 170.dp, start = 8.dp, end = 8.dp
+        ),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Image(
+            modifier = Modifier
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(170.dp)
+                .height(60.dp),
+            painter = painterResource(
+                id = R.drawable.feby
+            ),
+            contentDescription = null,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(170.dp)
+                .height(60.dp),
+            painter = painterResource(
+                id = R.drawable.virgoun
             ),
             contentDescription = null,
         )
@@ -177,75 +216,145 @@ fun MostPlayedSection() {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 230.dp, start = 5.dp, end = 5.dp)
+            .padding(top = 255.dp, start = 5.dp, end = 5.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .width(450.dp)
-                .height(60.dp)
-                .clip(shape = RoundedCornerShape(15.dp))
-                .background(Color.White, shape = RoundedCornerShape(15.dp))
-                .border(
-                    BorderStroke(2.dp, Color(0xFFB5B5B5))
-                )
-        )
+        Text(text = "    Most Played",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Left)
     }
-        Row(
-//        verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 240.dp, start = 20.dp, end = 50.dp)
-        ) {
-            Text(
-                textAlign = TextAlign.Center,
-                text = " How,s Your Day Nita?",
-                fontSize = 15.sp,
-                color = Color.Black,
-            )
-        }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top= 320.dp, start = 2.dp, end = 20.dp)
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.runtuh),
-                        contentDescription = "album",
-                        modifier = Modifier
-                            .size(220.dp)
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.billie),
-                        contentDescription = "album",
-                        modifier = Modifier
-                            .size(220.dp)
-                    )
-
-                }
     Row(
+//        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top= 550.dp, start = 2.dp, end = 20.dp)
+            .padding(top = 20.dp, start = 5.dp, end = 5.dp)
+    ) {
+    }
+
+    Row(
+        modifier = Modifier.padding(
+            top = 285.dp, start = 3.dp
+        ),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Image(
-            painter = painterResource(R.drawable.runtuh),
-            contentDescription = "album",
             modifier = Modifier
-                .size(220.dp)
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(150.dp)
+                .height(200.dp),
+            painter = painterResource(
+                id = R.drawable.justin
+            ),
+            contentDescription = null,
         )
         Image(
-            painter = painterResource(R.drawable.billie),
-            contentDescription = "album",
             modifier = Modifier
-                .size(220.dp)
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(150.dp)
+                .height(200.dp),
+            painter = painterResource(
+                id = R.drawable.soegi
+            ),
+            contentDescription = null,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 2.dp, start = 8.dp, end = 8.dp)
+                .width(150.dp)
+                .height(200.dp),
+            painter = painterResource(
+                id = R.drawable.habibi
+            ),
+            contentDescription = null,
+        )
+    }
+}
+
+//Card Bawah
+@Composable
+fun RecommendSection(){
+    Row(
+//        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 515.dp, start = 5.dp, end = 5.dp)
+    ) {
+        Text(text = "    Mix For You",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Left)
+    }
+    Row(
+//        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 30.dp, start = 5.dp, end = 5.dp)
+    ) {
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(
+                top = 280.dp, start = 3.dp
+            )
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Image(
+            modifier = Modifier
+                .padding(top = 270.dp, start = 8.dp, end = 8.dp)
+                .width(150.dp)
+                .height(200.dp),
+            painter = painterResource(
+                id = R.drawable.mood
+            ),
+            contentDescription = null,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 270.dp, start = 8.dp, end = 8.dp)
+                .width(150.dp)
+                .height(200.dp),
+            painter = painterResource(
+                id = R.drawable.payung
+            ),
+            contentDescription = null,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 270.dp, start = 8.dp, end = 8.dp)
+                .width(150.dp)
+                .height(200.dp),
+            painter = painterResource(
+                id = R.drawable.west
+            ),
+            contentDescription = null,
         )
     }
 }
 
 
+@Composable
+fun BackgroundImage(){
+    Image(
+        modifier = Modifier
+            .width(900.dp)
+            ,
+        painter = painterResource(
+            id = R.drawable.bg
+        ),
+        contentDescription = null,
+    )
+}
 
-
+//Coba
 
 
 //Card Atas 1
@@ -285,14 +394,14 @@ fun BottomNavigationBar() {
     BottomNavigation(
         backgroundColor = androidx.compose.ui.graphics.Color.Black,
         contentColor = androidx.compose.ui.graphics.Color.White,
-    ) {
+    ){
 //        val navBackStackEntry by navController.currentBackStackEntryAsState()
 //        val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
-                label = { Text(text = item.title) },
+                icon = {Icon(painterResource(id = item.icon), contentDescription = item.title)},
+                label = {Text(text = item.title)},
                 selectedContentColor = androidx.compose.ui.graphics.Color.White,
                 unselectedContentColor = androidx.compose.ui.graphics.Color.Gray,
                 alwaysShowLabel = true,
@@ -303,4 +412,26 @@ fun BottomNavigationBar() {
         }
     }
 }
+//@Preview(showBackground = true)
+//@Composable
+//fun BottomNavigationBarPreview() {
+//    BottomNavigationBar()
+//}
+
+//@Composable
+//fun Navigation(navController : NavHostController){
+//    NavHost(navController, startDestination = Navigation.Home.route){
+//        composable(Navigation.Home.route){
+//            HomeScreen()
+//        }
+//        composable(Navigation.Search.route){
+//            SearchScreen()
+//        }
+//        composable(Navigation.Library.route){
+//            ChatScreen()
+//        }
+//
+//
+//    }
+//}
 
